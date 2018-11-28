@@ -1,5 +1,10 @@
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.Buffer;
 import java.util.Formatter;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -9,18 +14,23 @@ public class FileUpdater {
 
     private Formatter x;
     private int i = 0;
+    private BufferedWriter writer;
 
     public void openFile(String[] arrayOfFileData){
-        //System.out.println(arrayOfFileData.length);
+
         try {
-            File folder = new File("C:\\Users\\OooOoOn\\Documents\\Paradox Interactive\\Europa Universalis IV\\mod\\historicalwars\\history\\temp\\");
-            for (File f : folder.listFiles()) {
-                x = new Formatter(f);
-                x.format(arrayOfFileData[i]);
-                x.flush();
-                x.close();
+            File folder = new File("C:\\Users\\OooOoOn\\Desktop\\temp\\");
+            for (File f : Objects.requireNonNull(folder.listFiles())) {
+                writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f), "Cp1252"));
+                writer.write(arrayOfFileData[i].toString());
+                writer.flush();
+                writer.close();
+                //x = new Formatter(f);
+                //x.format(arrayOfFileData[i]);
+                //x.flush();
+                //x.close();
                 i++;
-                System.out.println("File " + i);
+                System.out.println("File " + i + " has been updated.");
 
             }
         }
